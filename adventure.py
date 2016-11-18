@@ -58,7 +58,7 @@ def choice1():
         health = health - 1
         sleep(1)
         print ("-1 health")
-
+    
 
 
 
