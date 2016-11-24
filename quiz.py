@@ -14,7 +14,7 @@ def quiz():
         name = input("choose name: ")
         name = name.title()
         if name == "Gandalf":
-            print ("YOU AINT MAGIC YOU LIAR, THERES ONLY 1 GANDELF")
+            print ("YOU AINT MAGIC YOU LIAR, THERES ONLY 1 GANDALF")
             if n == 4:
                 print("ENOUGH OF YOUR LIES!")
                 quit()
