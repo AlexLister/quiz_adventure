@@ -7,12 +7,16 @@ health = 25
 curiosity = 0
 maxhealth = 20
 weapon = ""
+name = ""
 beasthp = 15 + (killcount * 3)
 beastdam = 3
 traincount = 0
 currency = 0
 
 def instructions():
+    sleep(2)
+    print("NOTE: This game is in pre pre pre pre pre beta and is not finished")
+    sleep(3)
     startg = input("Enter 'START' to play. Enter 'HELP' for instructions: ")
     startg = startg.lower()
     if startg == "start":
@@ -49,6 +53,8 @@ def typo():
     print(nope)
 
 def intro():
+    global name
+    
     print("<====================================================>")
     print(" ")
     print("Let me go...")
@@ -80,7 +86,9 @@ def intro():
     print("Ecinton: Now, choose your blade, great", name)
     sleep(3)
     weaponchoice()
+    
 def weaponchoice():
+    global dam
     global name
     print("Ecinton: The sword deals 4, and swings like a breeze...  (Safe)")
     sleep(2)
@@ -107,7 +115,7 @@ def weaponchoice():
         weaponchoice()
         
     sleep(2)
-    print("Ecinton: Come, walk with me")
+    print("Ecinton: Come, walk with me,", name)
     question()
 def questionA():
     question()
@@ -304,7 +312,7 @@ def home():
     sleep(2)
     print("Sit back, relax...")
     sleep(2)
-    for count in range(1, 7):
+    count = randint(1, 8):
         print("And watch season", count, " of Medieval Family.")
     sleep(4)
     print(" ")
@@ -338,19 +346,20 @@ def training():
         sleep(2)
         training()
 def combat1():
+    global beast
     sleep(1)
     print("You ready your weapon...")
     sleep(2)
-    for x in randint(1, 5):
-        beast = ""
-        if x == 1:
-            beast = "Lerk-Beetle"
-        elif x == 2:
-             beast = "Lerk-Worm"
-        elif x == 3:
-             beast = "Lerk-Spider"
-        elif x == 4:
-             beast = "Lerk-Snake"
+    x = randint(1, 5)
+    beast = ""
+    if x == 1:
+        beast = "Lerk-Beetle"
+    elif x == 2:
+        beast = "Lerk-Worm"
+    elif x == 3:
+        beast = "Lerk-Spider"
+    elif x == 4:
+        beast = "Lerk-Snake"
     print("Out from the bushes approaches a giant, terrifying", beast)
     print("<====================================================>")
     print(" Your health is", health, ", your damage is", dam, " Your currency is", currency)
@@ -370,6 +379,7 @@ def combat():
     global beastdam
     global weapon
     global beast
+    global killcount
     sleep(2)
     print(" ")
     print(" ")
@@ -393,52 +403,52 @@ def combat():
     print(" ")
     print(" ")
     if weapon == "mace":
-        for damage in randint(1, 4):
-            if damage == 1:
-                dam = 0
-                print("-Your heavy mace was too slow and the", beast, " dodged your attack")
-            else:
-                dam = dam
-                print("-Your mace hit at its normal damage striking a painful blow")
+        damage = randint(1, 4)
+        if damage == 1:
+            dam = 0
+            print("-Your heavy mace was too slow and the", beast, " dodged your attack")
+        else:
+            dam = dam
+            print("-Your mace hit at its normal damage striking a painful blow")
     elif weapon == "nunchucks":
-        for nundam in randint(1, 4):
-            if nundam == 1:
-                dam = dam + dam
-                print("-Your nunchucks came to use and hit TWICE dealing double damage!")
-            else:
-                dam = dam
-                print("-Your nunchucks only attacked once striking an underwhelming blow")
+        nundam = randint(1, 4)
+        if nundam == 1:
+            dam = dam + dam
+            print("-Your nunchucks came to use and hit TWICE dealing double damage!")
+        else:
+            dam = dam
+            print("-Your nunchucks only attacked once striking an underwhelming blow")
     if answer == "a":
-        for something in randint(1, 101):
-            if something > 50:
-                dam = 0
-                print("-Your swing for the head was risky and missed")
-            else:
-                dam = dam + dam
-                print("-Your swing was successful and you have dealt DOUBLE DAMAGE!")
+        something = randint(1, 101)
+        if something > 50:
+            dam = 0
+            print("-Your swing for the head was risky and missed")
+        else:
+            dam = dam + dam
+            print("-Your swing was successful and you have dealt DOUBLE DAMAGE!")
     elif answer == "c":
         dam = dam / 3
         health = health + beastdam - (beastdam / 3)
         print("-You swiped the enemys feet and dealt a small amount of damage")
-        for beastattack in randint(1, 101):
-                if beastattack > 50:
-                    beastdam = 0
-                else:
-                    beastdam = beastdam
+        beastattack = randint(1, 101)
+        if beastattack > 50:
+            beastdam = 0
+        else:
+            beastdam = beastdam
     elif answer == "d":
-        for chance in randint(50, 101):
-            if chance > 50:
-                dam = beastdam
-                print("-You have successfully reflected the beasts damage")
-            else:
-                dam = 0
-                print("-You messed up and did not reflect the attack")
+        chance = randint(50, 101)
+        if chance > 50:
+            dam = beastdam
+            print("-You have successfully reflected the beasts damage")
+        else:
+            dam = 0
+            print("-You messed up and did not reflect the attack")
     elif answer == "e":
-        for chance2 in randint(1, 10):
-            if chance2 < 8:
-                print("You run as fast as you can, barely escaping the beasts grasp...")
-                sleep(3)
-                themap()
+        chance2 = randint(1, 10)
+        if chance2 < 8:
+            print("You run as fast as you can, barely escaping the beasts grasp...")
+            sleep(3)
+            themap()
                 
     else:
         typo()
@@ -446,10 +456,10 @@ def combat():
         sleep(3)
         combat()
         
-    for chance2 in randint(1, 101):
-        if chance2 > 50:
-            beastdam = beastdam + beastdam
-            crithit = 1
+    chance2 = randint(1, 101)
+    if chance2 > 50:
+        beastdam = beastdam + beastdam
+        crithit = 1
 
     beasthp = beasthp - dam
     health = health - beastdam
@@ -549,6 +559,8 @@ def fighton():
             sleep(2)
             print(" ")
             fighton()
+
+print("Signed by Bendog")
         
         
         
@@ -565,4 +577,4 @@ def fighton():
 # Leave this at the bottom - it makes room1 run automatically when you
 # run your code.
 if __name__ == "__main__":
-     training()
+     instructions()
