@@ -8,9 +8,11 @@ curiosity = 0
 maxhealth = 20
 weapon = ""
 beasthp = 15 + (killcount * 3)
-beastdam = 3
+maxbdam = 3 + (killcount)
 traincount = 0
 currency = 0
+homecount = 0
+maxdam = 0
 
 def instructions():
     startg = input("Enter 'START' to play. Enter 'HELP' for instructions: ")
@@ -49,6 +51,7 @@ def typo():
     print(nope)
 
 def intro():
+    global name
     print("<====================================================>")
     print(" ")
     print("Let me go...")
@@ -81,7 +84,10 @@ def intro():
     sleep(3)
     weaponchoice()
 def weaponchoice():
+    global maxdam
+    global dam
     global name
+    global weapon
     print("Ecinton: The sword deals 4, and swings like a breeze...  (Safe)")
     sleep(2)
     print("Ecinton: The mace deals 6, yet may not hit with ease...  (Risky)")
@@ -95,11 +101,11 @@ def weaponchoice():
     sleep(2)
     print("Ecinton: Wise choice")
     if weapon == "sword":
-        dam = 4
+        maxdam = 4
     elif weapon == "mace":
-        dam = 6
+        maxdam = 6
     elif weapon == "nunchucks":
-        dam = 3
+        maxdam = 3
     else:
         typo()
         print(" ")
@@ -107,11 +113,12 @@ def weaponchoice():
         weaponchoice()
         
     sleep(2)
-    print("Ecinton: Come, walk with me")
+    print("Ecinton: Come, walk with me", name)
     question()
 def questionA():
     question()
 def question():
+    global maxdam
     global curiosity
     global name
     sleep(2)
@@ -239,7 +246,7 @@ def game():
     print("Ecinton: Im off!")
     themap()
 
-def themap():
+def themap():   #how cool is this
     sleep(2)
     print("Where would you like to go?")
     print("""
@@ -292,7 +299,17 @@ def themap():
         sleep(2)
         themap()
 
+def shop():
+    sleep(1)
+    print("-Coming in full release-")
+    themap()
+def upnorth():
+    sleep(1)
+    print("-Coming in full release-")
+    themap()
 def home():
+    global homecount
+    homecount = homecount + 1
     sleep(2)
     print("You open your smooth, rustic, wooden door...")
     sleep(2)
@@ -304,8 +321,8 @@ def home():
     sleep(2)
     print("Sit back, relax...")
     sleep(2)
-    for count in range(1, 7):
-        print("And watch season", count, " of Medieval Family.")
+    
+    print("And watch season", homecount, "of Medieval Family.")
     sleep(4)
     print(" ")
     print("~Health Restored~")
@@ -338,31 +355,35 @@ def training():
         sleep(2)
         training()
 def combat1():
+    global beast
+    global dam
+    dam = maxdam
+    beastdam = maxbdam
     sleep(1)
     print("You ready your weapon...")
     sleep(2)
-    for x in randint(1, 5):
-        beast = ""
-        if x == 1:
-            beast = "Lerk-Beetle"
-        elif x == 2:
-             beast = "Lerk-Worm"
-        elif x == 3:
-             beast = "Lerk-Spider"
-        elif x == 4:
-             beast = "Lerk-Snake"
-    print("Out from the bushes approaches a giant, terrifying", beast)
+    x = randint(1, 4)
+    beast = ""
+    if x == 1:
+        beast = "Lerk-Beetle"
+    elif x == 2:
+        beast = "Lerk-Worm"
+    elif x == 3:
+        beast = "Lerk-Spider"
+    elif x == 4:
+        beast = "Lerk-Snake"
+    print("Out from the bushes approaches a giant, terrifying,", beast)
     print("<====================================================>")
     print(" Your health is", health, ", your damage is", dam, " Your currency is", currency)
     print(" Your enemys health is", beasthp, ", their damage is", beastdam)
     print("<====================================================>")
-    sleep(3)
-    print(" ")
-    print(" ")
+    sleep(5)
     print(" ")
     combat()
 
-def combat():
+def combat():       #where the magic happens
+    global killcount
+    global crithit
     crithit = 0
     global health
     global dam
@@ -370,6 +391,8 @@ def combat():
     global beastdam
     global weapon
     global beast
+    dam = maxdam
+    beastdam = maxbdam
     sleep(2)
     print(" ")
     print(" ")
@@ -388,57 +411,64 @@ def combat():
     answer = answer.lower()
     sleep(2)
     print(" ")
-    print(" ")
-    print(" ")
-    print(" ")
-    print(" ")
+
     if weapon == "mace":
-        for damage in randint(1, 4):
-            if damage == 1:
-                dam = 0
-                print("-Your heavy mace was too slow and the", beast, " dodged your attack")
-            else:
-                dam = dam
-                print("-Your mace hit at its normal damage striking a painful blow")
+        damage = randint(1, 3)
+        if damage == 1:
+            dam = 0
+            print("-Your heavy mace was too slow and the", beast, " dodged your attack")
+            print("-You attacked the", beast, " with a total of 0 damage")
+            contin = input("Press enter to continue: ")
+            print(" ")
+            sleep(2)
+            enemys_turn()
+            
+        else:
+            dam = dam
+            print("-Your mace successfully hit striking a painful blow")
     elif weapon == "nunchucks":
-        for nundam in randint(1, 4):
-            if nundam == 1:
-                dam = dam + dam
-                print("-Your nunchucks came to use and hit TWICE dealing double damage!")
-            else:
-                dam = dam
-                print("-Your nunchucks only attacked once striking an underwhelming blow")
+        nundam = randint(1, 3)
+        if nundam == 1:
+            dam = dam + dam
+            print("-Your nunchucks came to use and hit TWICE dealing double damage!")
+        else:
+            dam = dam
+            print("-Your nunchucks only attacked once striking an underwhelming blow")
     if answer == "a":
-        for something in randint(1, 101):
-            if something > 50:
-                dam = 0
-                print("-Your swing for the head was risky and missed")
-            else:
-                dam = dam + dam
-                print("-Your swing was successful and you have dealt DOUBLE DAMAGE!")
+        something = randint(1, 100)
+        if something > 50:
+            dam = 0
+            print("-Your swing for the head was risky and missed")
+        else:
+            dam = dam + dam
+            print("-Your swing was successful and you have dealt DOUBLE DAMAGE!")
+    elif answer == "b":
+        dam = dam
+        print("-You safely attacked to the body")
     elif answer == "c":
-        dam = dam / 3
+        dam = dam // 3
         health = health + beastdam - (beastdam / 3)
         print("-You swiped the enemys feet and dealt a small amount of damage")
-        for beastattack in randint(1, 101):
-                if beastattack > 50:
-                    beastdam = 0
-                else:
-                    beastdam = beastdam
+        beastattack = randint(1, 101)
+        if beastattack > 50:
+            beastdam = 0
+        else:
+            beastdam = beastdam
     elif answer == "d":
-        for chance in randint(50, 101):
-            if chance > 50:
-                dam = beastdam
-                print("-You have successfully reflected the beasts damage")
-            else:
-                dam = 0
-                print("-You messed up and did not reflect the attack")
+        chance = randint(1, 100)
+        if chance > 50:
+            dam = beastdam
+            print("-You have successfully reflected the beasts damage")
+            beastdam = beastdam // 2
+        else:
+            dam = 0
+            print("-You messed up and did not reflect the attack")
     elif answer == "e":
-        for chance2 in randint(1, 10):
-            if chance2 < 8:
-                print("You run as fast as you can, barely escaping the beasts grasp...")
-                sleep(3)
-                themap()
+        chance2 = randint(1, 10)
+        if chance2 < 8:
+            print("You run as fast as you can, barely escaping the beasts grasp...")
+            sleep(3)
+            themap()
                 
     else:
         typo()
@@ -446,10 +476,10 @@ def combat():
         sleep(3)
         combat()
         
-    for chance2 in randint(1, 101):
-        if chance2 > 50:
-            beastdam = beastdam + beastdam
-            crithit = 1
+    chance2 = randint(1, 70)
+    if chance2 > 50:
+        beastdam = beastdam + 3
+        crithit = 1
 
     beasthp = beasthp - dam
     health = health - beastdam
@@ -458,24 +488,31 @@ def combat():
     if beasthp < 1:
         killcount = killcount + 1
         beasthp = 0
+        satisfaction()
 
-    print("-You attacked the", beast, " with a total damage of", dam)
+    print("-You attacked the", beast, "with a total damage of", dam)
     print(" ")
     continue1 = input("Press enter to continue: ")
     sleep(2)
+    enemys_turn()
+
+def enemys_turn():
+    global health
+    global crithit
+    dam = maxdam
     print(" ")
     print("<====================================================>")
     print("                            ENEMYS TURN:")
     print("<====================================================>")
     sleep(1)
     if beastdam == 0:
-        print("-Due to your feet swipe the", beast, " missed his attack")
+        print("-Due to your feet swipe the", beast, "missed his attack")
     elif crithit == 1:
-        print("-The", beast, " attacked you in the head where it is critical")
+        print("-The", beast, "attacked you in the head where it is critical")
     else:
-        print("-The", beast, " attacked you in the body meaning you took normal damage")
+        print("-The", beast, "attacked you in the body meaning you took normal damage")
     sleep(1)
-    print("-The", beast, " attacked you with a total damage of", beastdam)
+    print("-The", beast, "attacked you with a total damage of", beastdam)
     sleep(1)
     print(" ")
     print(" ")
@@ -515,7 +552,7 @@ def combat():
         print("You regain your mass...")
         sleep(1)
         print("You have another chance.")
-        sleep(3)
+        sleep(4)
         health = 1
         print("Your health is now 1.")
         sleep(2)
@@ -524,31 +561,37 @@ def combat():
     elif health > 0 and beasthp > 0:
         combat()
     else:
-        print("You watch as your foe drops to the ground.")
-        sleep(2)
-        print("You find it...")
-        sleep(2)
-        print("Satisfying.")
-        sleep(2)
-        for orbs in randint(6, 13):
-            print("You have recieved", orbs, " Lerk-Orbs")
-            currency = currency + orbs
-            sleep(2)
-            fighton()
+        satisfaction()
+        
+def satisfaction():
+    global currency
+    print("You watch as your foe drops to the ground.")
+    sleep(2)
+    print("You find it...")
+    sleep(2)
+    print("Satisfying.")
+    sleep(2)
+    orbs = randint(6, 13)
+    print("You have recieved", orbs, " Lerk-Orbs")
+    currency = currency + orbs
+    sleep(2)
+    fighton()
 def fighton():
-        fighton = input("[A] Fight on or [B] Leave the forest: ")
-        fighton = fighton.lower()
-        if fighton == "a":
-            sleep(1)
-            combat1()
-        elif fighton == "b":
-            sleep(1)
-            themap()
-        else:
-            typo()
-            sleep(2)
-            print(" ")
-            fighton()
+    sleep(1)
+    print("You can go home and regain your health or fight on")
+    fighton = input("[A] Fight on or [B] Leave the forest: ")
+    fighton = fighton.lower()
+    if fighton == "a":
+        sleep(1)
+        combat1()
+    elif fighton == "b":
+        sleep(1)
+        themap()
+    else:
+        typo()
+        sleep(2)
+        print(" ")
+        fighton()
         
         
         
@@ -565,4 +608,4 @@ def fighton():
 # Leave this at the bottom - it makes room1 run automatically when you
 # run your code.
 if __name__ == "__main__":
-     training()
+     intro()
