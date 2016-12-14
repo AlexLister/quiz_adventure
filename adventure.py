@@ -15,6 +15,11 @@ homecount = 0
 maxdam = 0
 
 def instructions():
+    sleep(2)
+    print("NOTE: This game is in pre pre beta and is not finished")
+    print(" ")
+    sleep(3)
+    print("This game is to be played on Comic Sans MS with text size 13 and on bold")
     startg = input("Enter 'START' to play. Enter 'HELP' for instructions: ")
     startg = startg.lower()
     if startg == "start":
@@ -88,6 +93,7 @@ def weaponchoice():
     global dam
     global name
     global weapon
+
     print("Ecinton: The sword deals 4, and swings like a breeze...  (Safe)")
     sleep(2)
     print("Ecinton: The mace deals 6, yet may not hit with ease...  (Risky)")
@@ -381,9 +387,7 @@ def combat1():
     print(" ")
     combat()
 
-def combat():       #where the magic happens
-    global killcount
-    global crithit
+def combat():
     crithit = 0
     global health
     global dam
@@ -393,6 +397,7 @@ def combat():       #where the magic happens
     global beast
     dam = maxdam
     beastdam = maxbdam
+    global killcount
     sleep(2)
     print(" ")
     print(" ")
@@ -411,7 +416,6 @@ def combat():       #where the magic happens
     answer = answer.lower()
     sleep(2)
     print(" ")
-
     if weapon == "mace":
         damage = randint(1, 3)
         if damage == 1:
@@ -421,8 +425,7 @@ def combat():       #where the magic happens
             contin = input("Press enter to continue: ")
             print(" ")
             sleep(2)
-            enemys_turn()
-            
+            enemys_turn()            
         else:
             dam = dam
             print("-Your mace successfully hit striking a painful blow")
@@ -449,7 +452,7 @@ def combat():       #where the magic happens
         dam = dam // 3
         health = health + beastdam - (beastdam / 3)
         print("-You swiped the enemys feet and dealt a small amount of damage")
-        beastattack = randint(1, 101)
+        beastattack = randint(1, 100)
         if beastattack > 50:
             beastdam = 0
         else:
@@ -465,10 +468,12 @@ def combat():       #where the magic happens
             print("-You messed up and did not reflect the attack")
     elif answer == "e":
         chance2 = randint(1, 10)
-        if chance2 < 8:
+        if chance2 < 6:
             print("You run as fast as you can, barely escaping the beasts grasp...")
             sleep(3)
             themap()
+        else:
+            print("You couldn't make it, the beast was too fast")
                 
     else:
         typo()
@@ -510,7 +515,7 @@ def enemys_turn():
     elif crithit == 1:
         print("-The", beast, "attacked you in the head where it is critical")
     else:
-        print("-The", beast, "attacked you in the body meaning you took normal damage")
+        print("-The", beast, "attacked you to the body meaning you took normal damage")
     sleep(1)
     print("-The", beast, "attacked you with a total damage of", beastdam)
     sleep(1)
@@ -592,20 +597,9 @@ def fighton():
         sleep(2)
         print(" ")
         fighton()
-        
-        
-        
-        
-        
-        
-    
-    
-        
-    
- 
     
 
 # Leave this at the bottom - it makes room1 run automatically when you
 # run your code.
 if __name__ == "__main__":
-     intro()
+     instructions()
